@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云天畅想AI应用创新大赛 抽签系统</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    #drawButton {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #drawButton:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #004d40;
+    }
+    #history {
+      margin-top: 30px;
+      font-size: 1em;
+      color: #00695c;
+    }
+  </style>
+</head>
+<body>
+  <h1>云天畅想AI应用创新大赛</h1>
+  <p>2025年5月28日 下午2点开始</p>
+  <h2>出场顺序抽签系统</h2>
+  <button id="drawButton">点击抽签</button>
+  <div id="result"></div>
+  <div id="history"></div>
+
+  <script>
+    const totalTeams = 16;
+    let availableNumbers = Array.from({ length: totalTeams }, (_, i) => i + 1);
+    let drawnList = [];
+
+    document.getElementById('drawButton').addEventListener('click', () => {
+      if (availableNumbers.length === 0) return;
+
+      const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+      const drawnNumber = availableNumbers.splice(randomIndex, 1)[0];
+
+      const teamName = prompt("请输入队伍名称：");
+
+      if (teamName) {
+        drawnList.push(`${drawnNumber}号：${teamName}`);
+        document.getElementById('result').textContent = `抽中出场顺序：第 ${drawnNumber} 位`;
+        document.getElementById('history').innerHTML = '<h3>已抽顺序：</h3>' + drawnList.map(s => `<p>${s}</p>`).join('');
+      }
+
+      if (availableNumbers.length === 0) {
+        document.getElementById('drawButton').disabled = true;
+        document.getElementById('drawButton').textContent = '抽签结束';
+      }
+    });
+  </script>
+</body>
+</html>
